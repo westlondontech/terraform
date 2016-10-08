@@ -1,11 +1,3 @@
-variable "aws_access_key" {
-  description = "The AWS access key."
-}
-
-variable "aws_secret_key" {
-  description = "The AWS secret key."
-}
-
 variable "region" {
   description = "The AWS region to create resources in."
   default = "eu-west-1"
@@ -26,7 +18,7 @@ variable "amis" {
   default = {
     ap-northeast-1 = "ami-8aa61c8a"
     ap-southeast-2 = "ami-5ddc9f67"
-    eu-west-1      = "ami-2aaef35d"
+    eu-west-1      = "ami-175f1964"
     us-east-1      = "ami-b540eade"
     us-west-1      = "ami-5721df13"
     us-west-2      = "ami-cb584dfb"
@@ -39,10 +31,9 @@ variable "instance_type" {
 
 variable "key_name" {
   description = "The aws ssh key name."
-  default = ""
+  default = "ecs"
 }
 
 variable "public_key" {
   description = "The ssh public key for using with the cloud provider."
-  default = ""
 }

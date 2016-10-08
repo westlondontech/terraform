@@ -1,0 +1,29 @@
+[
+  {
+    "name": "slack-register",
+    "image": "383909802591.dkr.ecr.eu-west-1.amazonaws.com/richmond-tech-slack:latest",
+    "cpu": 100,
+    "memory": 128,
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": 3000,
+        "hostPort": 3000
+      }
+    ],
+    "environment": [
+      {
+        "name": "COMMUNITY_NAME",
+        "value": "West London Tech"
+      },
+      {
+        "name": "SLACK_TOKEN",
+        "value": "${slack_api_key}"
+      },
+      {
+        "name": "SLACK_URL",
+        "value": "westlondontech.slack.com"
+      }
+    ]
+  }
+]
