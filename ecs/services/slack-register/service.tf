@@ -1,6 +1,6 @@
 resource "aws_alb" "slack-registerALB" {
   name    = "slack-register-alb"
-  subnets = ["subnet-e4daaf92", "subnet-90e799f4", "subnet-4a18a012"]
+  subnets = ["${var.subnet_first}", "${var.subnet_second}", "${var.subnet_third}"]
 
   tags {
     Name = "slack-register-alb"
@@ -43,8 +43,8 @@ resource "aws_alb_listener" "front_end" {
 }
 
 resource "aws_route53_record" "slack-register" {
-  zone_id = "Z225UKAB2YHT7U"
-  name = "register.westlondontech.com"
+  zone_id = "${var.route_53_id}"
+  name = "registert.westlondontech.com"
   type = "A"
 
   alias {
@@ -54,17 +54,6 @@ resource "aws_route53_record" "slack-register" {
   }
 }
 
-resource "aws_route53_record" "slack-register_2" {
-  zone_id = "Z225UKAB2YHT7U"
-  name = "slack.westlondontech.com"
-  type = "A"
-
-  alias {
-    name = "${aws_alb.slack-registerALB.dns_name}"
-    zone_id = "${aws_alb.slack-registerALB.zone_id}"
-    evaluate_target_health = true
-  }
-}
 
 /* container and task definitions for running the actual Docker registry */
 resource "aws_ecs_service" "slack-registerService" {
@@ -72,12 +61,12 @@ resource "aws_ecs_service" "slack-registerService" {
   cluster         = "${var.ecs_cluster_name}"
   task_definition = "${aws_ecs_task_definition.slack-registerTask.arn}"
   desired_count   = 1
-  iam_role        = "arn:aws:iam::383909802591:role/ecs_role"
+  iam_role        = "${var.ecs_role}"
 
   load_balancer {
     target_group_arn = "${aws_alb_target_group.front_end.arn}"
-    container_name = "slack-register"
-    container_port = 3000
+    container_name   = "slack-register"
+    container_port   = 3000
   }
 }
 
