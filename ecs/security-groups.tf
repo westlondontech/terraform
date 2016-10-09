@@ -4,6 +4,7 @@
 resource "aws_security_group" "ecs" {
   name = "ecs-sg"
   description = "Container Instance Allowed Ports"
+  vpc_id = "${var.vpc_id}"
 
   ingress {
     from_port = 1

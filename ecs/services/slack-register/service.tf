@@ -1,6 +1,6 @@
 resource "aws_alb" "slack-registerALB" {
   name    = "slack-register-alb"
-  subnets = ["${var.subnet_first}", "${var.subnet_second}", "${var.subnet_third}"]
+  subnets = ["${split(",", var.vpc_subnets)}"]
 
   tags {
     Name = "slack-register-alb"
@@ -11,7 +11,7 @@ resource "aws_alb_target_group" "front_end" {
   name = "slack-register-group"
   port = "80"
   protocol = "HTTP"
-  vpc_id = "vpc-29900b4d"
+  vpc_id = "${var.vpc_main}"
 
   health_check {
     port = "3000"
@@ -44,7 +44,7 @@ resource "aws_alb_listener" "front_end" {
 
 resource "aws_route53_record" "slack-register" {
   zone_id = "${var.route_53_id}"
-  name = "registert.westlondontech.com"
+  name = "register.westlondontech.com"
   type = "A"
 
   alias {

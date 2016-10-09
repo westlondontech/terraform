@@ -36,3 +36,13 @@ variable "key_name" {
 variable "public_key" {
   description = "The ssh public key for using with the cloud provider."
 }
+
+variable "slack_api_key" {}
+
+variable "vpc_id" {
+  default = "vpc-29900b4d"
+}
+
+variable "vpc_subnets" {
+  default = "subnet-e4daaf92,subnet-90e799f4,subnet-4a18a012"
+}
